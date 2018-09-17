@@ -5,4 +5,3 @@ printf "\nHelming tiller and dashboard...\n"
 kubectl create -f $GITTOP/tiller.yaml
 helm init --service-account tiller --upgrade
 
-kubectl create -f $GITTOP/dashboard-admin.yaml

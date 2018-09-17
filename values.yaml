@@ -25,7 +25,7 @@ google_pubsub_writer:
     VERSION: v2.1.0
     SERVER_PORT: 3001  
     INSTANCE_ID: google-asset-tracking
-    GOOGLE_MAPS_API_KEY: AIzaSyDFgK1FUkAoF17QHBqaAHGU0F1d2nVK80E
+    GOOGLE_MAPS_API_KEY: "[YOUR_GOOGLE_MAPS_API_KEY]"
 
 google_asset_tracking:
     VERSION: v2.2.1
