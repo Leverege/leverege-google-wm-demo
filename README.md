@@ -48,7 +48,7 @@ For other operating systems:
 
 Clone this repo
 
-    git clone [INSERT REPO LINK] && cd [INSERT DIR]
+    git clone git@github.com:Leverege/leverege-google-wm-demo.git && cd leverege-google-wm-demo
 
 ### Add service account credentials and configure its roles
 
