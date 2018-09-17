@@ -1,0 +1,59 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: google-pubsub-writer
+  labels: {app: google-pubsub-writer}
+spec:
+  replicas: 1
+  template:
+    metadata: {labels: {app: google-pubsub-writer}}
+    spec:
+      volumes:
+      - name: logs
+        emptyDir: {}
+      - name: credentials
+        secret:
+          secretName: application-credentials
+      containers:        
+      - name: google-pubsub-writer
+        image: leverege/google-pubsub-writer:{{ .Values.google_pubsub_writer.VERSION }}        
+        ports:
+          - containerPort: {{ .Values.google_pubsub_writer.SERVER_PORT }}
+        readinessProbe:
+          httpGet:
+            port: {{ .Values.google_pubsub_writer.SERVER_PORT }}
+            path: /device
+        volumeMounts:
+          - name: credentials
+            mountPath: {{ .Values.default.GOOGLE_APPLICATION_CREDENTIALS }}
+          - name: logs
+            mountPath: {{ .Values.default.LOG_DIR }}
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
+        env:         
+          - name: LOG_LEVEL
+            value: {{ .Values.default.LOG_LEVEL }}   
+          - name: LOG_DIR
+            value: {{ .Values.default.LOG_DIR }}   
+          - name: GOOGLE_APPLICATION_CREDENTIALS
+            value: {{ .Values.default.GOOGLE_APPLICATION_CREDENTIALS }}/{{ .Values.default.SECRET_KEY }}
+          - name: GOOGLE_CLOUD_PROJECT
+            value: {{ .Values.default.GOOGLE_CLOUD_PROJECT }}
+          - name: GOOGLE_CLOUD_IOT_REGISTRY
+            value: {{ .Values.default.GOOGLE_CLOUD_IOT_REGISTRY }}
+          - name: GOOGLE_CLOUD_PUBSUB_TOPIC
+            value: {{ .Values.default.GOOGLE_CLOUD_PUBSUB_TOPIC }}
+          - name: INSTANCE_ID
+            value:  {{ quote .Values.google_pubsub_writer.INSTANCE_ID }}
+          - name: PORT
+            value: {{ quote .Values.google_pubsub_writer.SERVER_PORT }}
+          - name: GOOGLE_WASTE_SIM_HOST
+            value: 'http://google-sim-engine-lb:{{ .Values.google_sim_engine.SERVER_PORT }}'
+          - name: GOOGLE_MAPS_API_KEY
+            value:  {{ .Values.google_pubsub_writer.GOOGLE_MAPS_API_KEY }}
+          

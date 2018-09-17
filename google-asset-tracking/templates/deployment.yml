@@ -1,0 +1,36 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: google-asset-tracking
+  labels: {app: google-asset-tracking}
+spec:
+  replicas: 1
+  template:
+    metadata: {labels: {app: google-asset-tracking}}
+    spec:   
+      volumes:
+        - name: env
+          secret:
+            secretName: frontend-env        
+      containers:        
+      - name: google-asset-tracking
+        image: leverege/google-waste-management:{{ .Values.google_asset_tracking.VERSION }}
+        ports:
+          - containerPort: {{ .Values.google_asset_tracking.SERVER_PORT }}
+        readinessProbe:          
+          httpGet:
+            port: {{ .Values.google_asset_tracking.SERVER_PORT }}
+            path: /
+          initialDelaySeconds: 10
+          periodSeconds: 5
+        volumeMounts:
+          - name: env            
+            mountPath: /usr/share/app/env.js
+            subPath: env.js
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"        

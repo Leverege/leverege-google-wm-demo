@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: google-sim-engine-lb
+spec:
+  type: NodePort
+  selector:
+    app: google-sim-engine
+  ports:
+  - protocol: TCP    
+    name: backend
+    port: {{ .Values.google_sim_engine.SERVER_PORT }}
+    #targetPort: 3000    

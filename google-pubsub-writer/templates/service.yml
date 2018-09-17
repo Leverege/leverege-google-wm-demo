@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: google-pubsub-writer-lb
+spec:
+  type: NodePort
+  selector:
+    app: google-pubsub-writer
+  ports:
+  - protocol: TCP
+    name: backend
+    port: {{ .Values.google_pubsub_writer.SERVER_PORT }}
+    # targetPort: 3001

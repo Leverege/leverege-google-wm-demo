@@ -1,0 +1,15 @@
+Blue.start({
+  devices: {
+    root: 'data/google-asset-tracking',
+    firestore: 'FIRESTORE_CONFIG',
+  },
+  sim: {
+    host: '/sim',
+  },
+  pubsub: {
+    host: '/pubsub',
+  },
+  keys: {
+    mapsKey: 'GOOGLE_MAPS_API_KEY',
+  },
+});

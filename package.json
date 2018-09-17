@@ -1,0 +1,21 @@
+{
+  "name": "kubernetes-config",
+  "version": "1.0.0",
+  "description": "",
+  "main": "envToYaml.js",
+  "scripts": {
+    "values": "node ./scripts/createValueFiles.js",
+    "convert": "node ./scripts/envToYaml.js",
+    "createPlatformSecrets": "node ./scripts/createPlatformSecrets",
+    "updateGoogleWasteManagementCharts": "helm dep up ./google-waste-management",
+    "installGoogleWasteManagement": "npm run updateGoogleWasteManagementCharts && helm install ./google-waste-management --name google-waste-management",
+    "upgradeGoogleWasteManagement": "npm run updateGoogleWasteManagementCharts && helm upgrade google-waste-management ./google-waste-management"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google-cloud/compute": "^0.10.0",
+    "line-reader": "^0.4.0",
+    "yamljs": "^0.3.0"
+  }
+}

@@ -1,0 +1,31 @@
+#!/bin/bash
+GITTOP=`git rev-parse --show-toplevel`
+
+GCLOUD_PROJECT="$1"
+if [ -z "$1" ]; then
+echo 
+read -p 'Please enter project id: ' GCLOUD_PROJECT
+echo
+fi
+
+if [ -z "$GCLOUD_PROJECT" ];
+then
+  cat<<KEYERR
+  ***WARNING: Inform a valid gcloud project id     
+KEYERR
+exit 1
+fi
+
+$GITTOP/scripts/Step_2_set_cluster $GCLOUD_PROJECT
+
+clear
+printf "\nDropping the Google Waste Management nodes at `date`\n"
+helm delete --purge google-waste-management
+
+printf "\n\nTime to delete the cluster?\n"
+gcloud container clusters delete google-waste-management-gke
+
+printf "\n\Dropping devices from registry at `date`\n"
+gcloud iot devices list --registry=iot-asset-tracking --region=us-central1 --page-size=1000 \
+    | awk 'FNR > 1 {print $1}' \
+    | xargs -L1 gcloud iot devices delete --registry=iot-asset-tracking --region=us-central1 --quiet

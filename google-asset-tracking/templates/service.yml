@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: google-asset-tracking-lb
+spec:
+  type: NodePort
+  selector:
+    app: google-asset-tracking
+  ports:
+  - protocol: TCP
+    name: backend
+    port: {{ .Values.google_asset_tracking.SERVER_PORT }}
+    # targetPort: 80

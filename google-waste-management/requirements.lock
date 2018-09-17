@@ -1,0 +1,15 @@
+dependencies:
+- name: nginx-ingress
+  repository: https://kubernetes-charts.storage.googleapis.com
+  version: 0.28.2
+- name: google-sim-engine
+  repository: file://../google-sim-engine
+  version: 0.0.1
+- name: google-asset-tracking
+  repository: file://../google-asset-tracking
+  version: 0.0.1
+- name: google-pubsub-writer
+  repository: file://../google-pubsub-writer
+  version: 0.0.1
+digest: sha256:53ae732d04034cab4414a9e9972b139010bb3fa9ae504c4048a4d35ca4b0459c
+generated: 2018-09-12T17:08:46.661212474-04:00

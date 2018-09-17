@@ -1,0 +1,19 @@
+#!/bin/bash
+GKE_PROJ=$1
+#GKE_ZONE="us-central1-f"
+GKE_ZONE="us-central1-c"
+GKE_CLUS="google-waste-management-gke"
+
+GCL="gcloud"
+
+printf "\nSetting the gcloud configuration\n\n"
+$GCL config set compute/zone $GKE_ZONE
+$GCL config set container/cluster $GKE_CLUS
+$GCL config set container/use_v1_api false
+$GCL config set container/use_v1_api_client false
+$GCL config set project $GKE_PROJ
+
+$GCL container clusters get-credentials $GKE_CLUS
+
+printf "\nGCloud Config\n"
+$GCL config list

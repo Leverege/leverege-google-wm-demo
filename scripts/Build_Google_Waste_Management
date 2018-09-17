@@ -1,0 +1,68 @@
+#!/bin/bash
+npm install
+
+GITTOP=`git rev-parse --show-toplevel`
+
+cd $GITTOP/scripts
+
+countdown()
+{
+  local count=$2
+  local msg=$1
+  while [ $count -gt 0 ];
+  do
+    printf "  $msg in => $count\033[0K\r"
+    sleep 1
+    : $((count--))
+  done
+  printf "\033[0K\r\n"
+}
+
+clear
+
+printf "\nPlease login to your gcloud account in the new browser tab, then return to this script.\n"
+gcloud auth login
+
+printf "\nOnce you've logged into your project, enter the project id below."
+GCLOUD_PROJECT="$1"
+if [ -z "$1" ]; then
+echo 
+read -p 'Please enter project id: ' GCLOUD_PROJECT
+echo
+fi
+
+if [ -z "$GCLOUD_PROJECT" ];
+then
+  cat<<KEYERR
+  ***WARNING: Inform a valid gcloud project id     
+KEYERR
+exit 1
+fi
+
+printf "\n\nStarting Google Asset Tracking cluster build at `date`\n"
+./Step_1_gke_create $GCLOUD_PROJECT
+./Step_2_set_cluster $GCLOUD_PROJECT
+./Step_3_create_resources $GCLOUD_PROJECT
+./Step_4_add_secrets $GCLOUD_PROJECT
+./Step_5_helm_setup
+
+printf "\nInitial cluster build complete - let it simmer for a bit...\n\n"
+
+countdown "Installing Google Waste Management" 120
+npm run values $GCLOUD_PROJECT
+npm run installGoogleWasteManagement
+
+cat << EOINS
+
+
+  Google Waste Management k8s installation is complete. 
+  Now wait a little bit for the Ingress controller to get an IP Address
+
+`date`
+
+EOINS
+
+countdown "Getting IP Address" 60
+kubectl describe services google-waste-management-nginx-ingress-controller
+
+cd - &>/dev/null

@@ -1,0 +1,71 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: google-sim-engine
+  labels: {app: google-sim-engine}
+spec:
+  replicas: 1
+  template:
+    metadata: {labels: {app: google-sim-engine}}
+    spec:
+      volumes:
+      - name: credentials
+        secret:
+          secretName: application-credentials
+      - name: logs
+        emptyDir: {}
+      - name: keys
+        persistentVolumeClaim:
+          claimName: google-asset-tracking-keys-volumeclaim
+      containers:        
+      - name: google-sim-engine
+        image: leverege/google-sim-engine:{{ .Values.google_sim_engine.VERSION }}
+        ports:
+          - containerPort: {{ .Values.google_sim_engine.SERVER_PORT }}
+        readinessProbe:
+          httpGet:
+            port: {{ .Values.google_sim_engine.SERVER_PORT }}
+            path: /healthz
+        volumeMounts:
+          - name: credentials
+            mountPath: {{ .Values.default.GOOGLE_APPLICATION_CREDENTIALS }}
+          - name: keys
+            mountPath: {{ .Values.default.KEY_FOLDER }}
+          - name: logs
+            mountPath: {{ .Values.default.LOG_DIR }}
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
+        env:          
+          - name: LOG_LEVEL
+            value: {{ .Values.default.LOG_LEVEL }}
+          - name: LOG_DIR
+            value: {{ .Values.default.LOG_DIR }}
+          - name: MAX_CHILD_PROCESSES
+            value: {{ quote .Values.google_sim_engine.MAX_CHILD_PROCESSES }}
+          - name: GOOGLE_APPLICATION_CREDENTIALS
+            value: {{ .Values.default.GOOGLE_APPLICATION_CREDENTIALS }}/{{ .Values.default.SECRET_KEY }}
+          - name: GOOGLE_CLOUD_PROJECT
+            value: {{ quote .Values.default.GOOGLE_CLOUD_PROJECT }}
+          - name: GOOGLE_CLOUD_IOT_REGISTRY
+            value: {{ quote .Values.default.GOOGLE_CLOUD_IOT_REGISTRY }}
+          - name: GOOGLE_CLOUD_PUBSUB_TOPIC
+            value: {{ quote .Values.default.GOOGLE_CLOUD_PUBSUB_TOPIC }}
+          - name: KEY_FOLDER
+            value: {{ .Values.default.KEY_FOLDER }}
+          - name: NUM_TRUCKS
+            value: {{ quote .Values.google_sim_engine.NUM_TRUCKS }}
+          - name: NUM_CARGO
+            value: {{ quote .Values.google_sim_engine.NUM_CARGO }}
+          - name: NUM_ROUTES
+            value: {{ quote .Values.google_sim_engine.NUM_ROUTES }}
+          - name: MESSAGE_INTERVAL
+            value: {{ quote .Values.google_sim_engine.MESSAGE_INTERVAL }}
+          - name: TRUCK_BASE_NAME
+            value: {{ quote .Values.google_sim_engine.TRUCK_BASE_NAME }}
+          - name: CARGO_BASE_NAME
+            value: {{ quote .Values.google_sim_engine.CARGO_BASE_NAME }}

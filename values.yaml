@@ -1,0 +1,32 @@
+default:
+    GOOGLE_APPLICATION_CREDENTIALS: /var/config/credentials    
+    GOOGLE_CLOUD_PROJECT: "[PROJECT_ID]"
+    GOOGLE_CLOUD_IOT_REGISTRY: "iot-asset-tracking"
+    GOOGLE_CLOUD_PUBSUB_TOPIC: "pubsub-asset-tracking"
+    
+    SECRET_KEY: key.json
+    KEY_FOLDER: /var/keys
+    LOG_LEVEL: "warn"
+    LOG_DIR: /var/log/levlog
+    
+google_sim_engine:
+    VERSION: v3.1.0
+    SERVER_PORT: 3000    
+    MAX_CHILD_PROCESSES: "1"    
+    NUM_TRUCKS: "15"
+    NUM_CARGO: "30"
+    NUM_ROUTES: "3"
+    MESSAGE_INTERVAL: "5"
+    TRUCK_BASE_NAME: "T-"
+    CARGO_BASE_NAME: "B-"
+    MAX_CHILD_PROCESSES: "1"    
+
+google_pubsub_writer:
+    VERSION: v2.1.0
+    SERVER_PORT: 3001  
+    INSTANCE_ID: google-asset-tracking
+    GOOGLE_MAPS_API_KEY: AIzaSyDFgK1FUkAoF17QHBqaAHGU0F1d2nVK80E
+
+google_asset_tracking:
+    VERSION: v2.2.1
+    SERVER_PORT: 80

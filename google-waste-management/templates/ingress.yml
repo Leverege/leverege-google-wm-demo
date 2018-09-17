@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: google-asset-tracking-ingress  
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - http:
+      paths:                      
+      - path: /sim/
+        backend:
+          serviceName: google-sim-engine-lb
+          servicePort: {{ .Values.google_sim_engine.SERVER_PORT }}
+      - path: /pubsub/
+        backend:
+          serviceName: google-pubsub-writer-lb
+          servicePort: {{ .Values.google_pubsub_writer.SERVER_PORT }}
+      - path: /
+        backend:
+          serviceName: google-asset-tracking-lb          
+          servicePort: {{ .Values.google_asset_tracking.SERVER_PORT }}    

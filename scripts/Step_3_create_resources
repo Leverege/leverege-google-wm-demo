@@ -1,0 +1,30 @@
+#!/bin/bash
+GKE_PROJ=$1
+#GKE_ZONE="us-central1-f"
+GKE_ZONE="us-central1-c"
+GKE_CLUS="google-waste-management-gke"
+
+GCL="gcloud"
+
+gcloud config set project $GKE_PROJ
+
+# Enable Services
+SERVICES=(
+  bigquery-json
+  cloudiot
+  firebase
+  firestore
+  pubsub
+  containerregistry
+)
+
+for svc in ${SERVICES[@]};
+do
+  printf "Enabling Service: ${svc}\n"
+  gcloud services enable ${svc}.googleapis.com
+done
+
+# Create pubsub topic & save topic in env variable 
+gcloud pubsub topics create pubsub-asset-tracking
+gcloud pubsub subscriptions create writer-pubsub-asset-tracking --topic=pubsub-asset-tracking  --topic-project=$GKE_PROJ
+gcloud iot registries create iot-asset-tracking --region=us-central1 --event-pubsub-topic=pubsub-asset-tracking
