@@ -1,0 +1,6 @@
+.env
+node_modules
+*.txt
+*/values.yaml
+platform/charts/*
+monitoring/charts/*
