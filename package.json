@@ -8,11 +8,11 @@
     "convert": "node ./scripts/envToYaml.js",
     "createPlatformSecrets": "node ./scripts/createPlatformSecrets",
     "updateGoogleWasteManagementCharts": "helm dep up ./google-waste-management",
-    "installGoogleWasteManagement": "npm run updateGoogleWasteManagementCharts && helm install ./google-waste-management --name google-waste-management",
-    "upgradeGoogleWasteManagement": "npm run updateGoogleWasteManagementCharts && helm upgrade google-waste-management ./google-waste-management"
+    "installGoogleWasteManagement": "npm run updateGoogleWasteManagementCharts && helm install ./helm-configs --name google-waste-management",
+    "upgradeGoogleWasteManagement": "npm run updateGoogleWasteManagementCharts && helm upgrade google-waste-management ./helm-configs"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Leverege",
+  "license": "Apache-2.0",
   "dependencies": {
     "@google-cloud/compute": "^0.10.0",
     "line-reader": "^0.4.0",

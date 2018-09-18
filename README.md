@@ -71,7 +71,7 @@ Clone this repo
 
 ### Add your Google Maps API key to the environment variable
 
-Open the `scripts/platform-secrets/fontend-env` file with a text editor. In that file, replace the phrase `GOOGLE_MAPS_API_KEY` with your Google Maps API key (keeping the quotes).
+Open the `scripts/platform-secrets/fontend-env` file with a text editor. In that file, replace the phrase `GOOGLE_MAPS_API_KEY` with your Google Maps API key (keeping the quotes). 
 
 The file should look like this before you add your key:
 
@@ -94,6 +94,8 @@ Blue.start({
 ```
 
 Save the `scripts/platform-secrets/fontend-env` file.
+
+Also open the `values.yaml` file with a text editor. In that file replace the phrase `[YOUR_GOOGLE_MAPS_API_KEY]` with your Google Maps API key (keeping the quotes). Save the `values.yaml` file.
 
 ### Run the deployment script
 
