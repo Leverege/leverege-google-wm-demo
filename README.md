@@ -93,7 +93,7 @@ Blue.start({
 });
 ```
 
-Save the `scripts/platform-secrets/fontend-env` file.
+Save the `scripts/platform-secrets/frontend-env` file.
 
 Also open the `values.yaml` file with a text editor. In that file replace the phrase `[YOUR_GOOGLE_MAPS_API_KEY]` with your Google Maps API key (keeping the quotes). Save the `values.yaml` file.
 
