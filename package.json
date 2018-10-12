@@ -7,7 +7,7 @@
     "values": "node ./scripts/createValueFiles.js",
     "convert": "node ./scripts/envToYaml.js",
     "createPlatformSecrets": "node ./scripts/createPlatformSecrets",
-    "updateGoogleWasteManagementCharts": "helm dep up ./google-waste-management",
+    "updateGoogleWasteManagementCharts": "helm dep up ./helm-configs",
     "installGoogleWasteManagement": "npm run updateGoogleWasteManagementCharts && helm install ./helm-configs --name google-waste-management",
     "upgradeGoogleWasteManagement": "npm run updateGoogleWasteManagementCharts && helm upgrade google-waste-management ./helm-configs"
   },
