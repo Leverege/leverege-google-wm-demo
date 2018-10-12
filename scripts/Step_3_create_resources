@@ -27,4 +27,4 @@ done
 # Create pubsub topic & save topic in env variable 
 gcloud pubsub topics create pubsub-asset-tracking
 gcloud pubsub subscriptions create writer-pubsub-asset-tracking --topic=pubsub-asset-tracking  --topic-project=$GKE_PROJ
-gcloud iot registries create iot-asset-tracking --region=us-central1 --event-pubsub-topic=pubsub-asset-tracking
+gcloud iot registries create iot-asset-tracking --region=us-central1 --event-notification-config=topic=pubsub-asset-tracking
