@@ -65,7 +65,7 @@ Clone this repo
     * Pub/Sub > Pub/Sub Admin
     * BigQuery > BigQuery Admin
 
-3. Check **Furnish a new private key** and, leave key type as "JSON"
+3. Click **+ Create Key** and, leave key type as "JSON"
 
 4. Click **Save** and download the file to this repo's `scripts/platform-secrets/` folder.
 
