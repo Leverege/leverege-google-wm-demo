@@ -61,7 +61,7 @@ Clone this repo
 2. Add the following project roles:
 
     * Cloud IoT > Cloud IoT Admin
-    * Other > Firebase Rules System
+    * Firebase > Firebase Rules System
     * Pub/Sub > Pub/Sub Admin
     * BigQuery > BigQuery Admin
 
